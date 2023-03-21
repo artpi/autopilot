@@ -26,8 +26,13 @@ jobs:
         GITHUB_API_KEY: ${{ secrets.GITHUB_TOKEN }}
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: master
+    - name: Setup Git
+      run: |
+        git config user.name "Autopilot"
+        git config user.email "autopilot@artpi.net"
+    - name: Commit and push changes
+      run: |
+        git add ./content
+        git commit -m "Automated changes by PHP script"
+        git push
+
