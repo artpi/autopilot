@@ -2,6 +2,8 @@ name: Run PHP Script and Commit Changes
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
 
 jobs:
   run-php-script:
