@@ -1,0 +1,36 @@
+name: Run PHP Script and Commit Changes
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-php-script:
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+
+    - name: Run PHP Script
+      run: php autopilot.php
+      env:
+        GITHUB_API_KEY: ${{ secrets.GITHUB_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    - name: Setup Git
+      run: |
+        git config user.name "Autopilot"
+        git config user.email "autopilot@artpi.net"
+
+    - name: Commit and push changes
+      run: |
+        git add .
+        git commit -m "Automated changes by PHP script"
+        git push
