@@ -40,7 +40,7 @@ function callGPT( $prompt = [] ) {
             "header" => "Content-Type: application/json\r\n" .
                         "Authorization: Bearer " . OPENAI_TOKEN . "\r\n",
             "content" => json_encode([
-                "model" => "gpt-3.5-turbo",
+                "model" => "gpt-4",
                 "messages" => $prompt,
                 "max_tokens" => 2048
             ])
