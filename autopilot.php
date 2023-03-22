@@ -38,6 +38,7 @@ function call_gpt( $prompt = array() ) {
         array(
             'model'     => 'gpt-4',
             'messages'  => $prompt,
+            'stop'      => '</html>',
         ),
         'POST',
     );
@@ -50,6 +51,7 @@ function call_gpt( $prompt = array() ) {
             array(
                 'model'     => 'gpt-3.5-turbo',
                 'messages'  => $prompt,
+                'stop'      => '</html>',
             ),
             'POST',
         );
