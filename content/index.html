@@ -108,6 +108,19 @@
             height: 50px;
             margin-top: 20px;
         }
+
+        .success-hero {
+            display: none;
+            font-size: 48px;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 50px;
+            margin: 20px;
+            border-radius: 10px;
+            background-image: url('https://i.imgur.com/oHMkfY6.gif');
+            background-size: cover;
+        }
     </style>
 </head>
 
@@ -115,6 +128,7 @@
     <img src="images/small_logo.png" alt="Small Logo" class="logo" />
     <img src="images/green_tree_frog.png" alt="Green Tree Frog" />
     <button id="buy-now-button" onclick="addGlitter()">Buy now</button>
+    <div id="success-hero" class="success-hero">Success</div>
     <div class="story-container">
         <h2>Touching Story About a Dog</h2>
         <p>Once upon a time in a small village, there lived a kindhearted dog named Max...</p>
@@ -130,7 +144,15 @@
 
     <script>
         const addGlitter = () => {
-            alert('Glitter effect added when you buy a frog!');
+            // Remove alert
+            // alert('Glitter effect added when you buy a frog!');
+            
+            // Replace button with hero section saying "Success"
+            document.getElementById('buy-now-button').style.display = 'none';
+            document.getElementById('success-hero').style.display = 'block';
+            
+            // Make the hero section sparkle with glitter
+            document.getElementById('success-hero').style.backgroundImage = "url('https://i.imgur.com/oHMkfY6.gif')";
         };
 
     </script>
