@@ -88,12 +88,26 @@ function perform_changes_from_issues() {
     }
     echo $prompt;
 
-    change( $prompt );
+    $didchange = change( $prompt );
 
+    // We are going to close issues anyway to prevent one failing issue holding up everything
     foreach ( $issues as $issue ) {
         call_api( $issue->url, GITHUB_TOKEN, array( 'state' => 'closed' ), 'PATCH' );
     }
+    if( ! $didchange ) {
+        return;
+    }
+
+    $closed_issues = join( ', ',  array_map( function ( $issue ) { return "#{$issue->number}"; }, $issues ) );
+    commit( "Closes $closed_issues" );
 }
 
 perform_changes_from_issues();
 
+function commit( $message ) {
+    system( 'git config user.name "Autopilot"' );
+    system( 'git config user.email "autopilot@artpi.net"' );
+    system( 'git add ./content' );
+    system( 'git commit -m "' . $message . '"' );
+    system( 'git push' );
+}
