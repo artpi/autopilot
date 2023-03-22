@@ -45,6 +45,35 @@ function call_gpt( $prompt = array() ) {
     return trim( $response_data->choices[0]->message->content );
 }
 
+function call_dalle( $prompt ) {
+    $filename = strtolower( preg_replace( '/[^a-zA-Z]/', '_', $prompt ) ) . '.png';
+    $path = "content/images/" . $filename;
+
+    if ( file_exists( $path ) ) {
+        return $path;
+    }
+
+    $response_data = call_api(
+        'https://api.openai.com/v1/images/generations', 
+        OPENAI_TOKEN,
+        array(
+            'n'     => 1,
+            'prompt' => $prompt,
+            'size'  => '256x256',
+        ),
+        'POST',
+    );
+
+    if ( ! isset( $response_data->data[0]->url ) ) {
+        print_r( $response_data );
+        return false;
+    }
+    
+    copy( $response_data->data[0]->url, $path );
+    echo "Created image $path\n";
+    return $path;
+}
+
 function change( $new_instruction = '' ) {
     $system_prompt = 'You are a program that manipulates html. Please output only valid HTML. You can use Javascript, CSS and HTML5 tags. You will get previous content of the page and will manipulate it to accomodate a following instruction.';
     $previous_html = file_get_contents( FILE );
@@ -64,6 +93,20 @@ function change( $new_instruction = '' ) {
     );
     $response = call_gpt( $prompt );
     if ( $response ) {
+
+        // Now let's have images!
+        preg_match_all( '#<img src="(http[^"]+)" alt="([^"]+)" \/>#is', $response, $images );
+        if ( isset( $images[2][0] )  ) {
+            // We have an alt text for the first image. We are only going to handle that one.
+            $image_url = call_dalle( $images[2][0] );
+            if ( $image_url ) {
+                $response = str_replace( $images[1][0], $image_url, $response );
+            }
+            foreach( $images[0] as $image ) {
+                $response = str_replace( $image, '', $response );
+            }
+        }
+
         file_put_contents( FILE, $response );
         return true;
     }
@@ -102,8 +145,6 @@ function perform_changes_from_issues() {
     commit( "Closes $closed_issues" );
 }
 
-perform_changes_from_issues();
-
 function commit( $message ) {
     system( 'git config user.name "Autopilot"' );
     system( 'git config user.email "autopilot@artpi.net"' );
@@ -111,3 +152,5 @@ function commit( $message ) {
     system( 'git commit -m "' . $message . '"' );
     system( 'git push' );
 }
+
+perform_changes_from_issues();
