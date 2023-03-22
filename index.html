@@ -2,19 +2,30 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-	<title>GPT Autopilot</title>
-	<style>
+    <title>Autopilot: Collaborative GPT-4 powered webmaster on Github actions</title>
+    <style>
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
         }
+
         #header {
             display: block;
-            height: 80px;
             padding: 20px;
-            line-height: 28px;
+            line-height: 26px;
+            font-size: 14px;
+            background: linear-gradient(10deg, #466fc1, #1e68bd);
+            color: #ffffff;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
         }
+
+        a:visited {
+            color: white;
+        }
+    
         iframe {
             border: 0;
             display: block;
@@ -23,19 +34,23 @@
         }
         #twitter {
             display: block;
-            float: right;
-            margin: 0 10px;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+            margin: 10px;
+            border-radius: 16px;
+            background-color: rgba(232, 232, 232, 0.16);
+            padding: 4px 20px;
+            text-decoration: none;
         }
-        #submit {
-            display:inline-block;
-        }
-	</style>
+
+    </style>
 </head>
 <body>
 <div id="header">
-    GPT4 is the most agreeable maintainer of all time. You submit an issue and it will implemented within an hour.<br/> 
-    <a id="submit" href='https://github.com/artpi/autopilot/issues' target="_blank">Submit an issue and see it implemented.</a> <br/>
-    <a id="twitter" href="https://twitter.com/artpi" target="_blank">@artpi experiment</a>
+    Have you ever worked with a client that would relentlessly send you requests for updates?<br/>
+    Fear no more! Now Autopilot is here to implement all the "great" ideas of your customer without doubt or reason. <a href='https://github.com/artpi/autopilot/issues?q=is%3Aissue+is%3Aclosed'>See implemented feedback</a> or <a href='https://github.com/artpi/autopilot/issues' target="_blank">submit your first issue</a>
+    <a id="twitter" href="https://twitter.com/artpi" target="_blank">🚀 @artpi experiment</a>
 </div>
 <iframe width="100%" src="./content/index.html"></iframe>
 </body>
