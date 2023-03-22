@@ -20,7 +20,7 @@ function call_api( $url, $token, $payload = '', $method = 'GET' ) {
     }
 
     $context = stream_context_create( $options );
-    $response = file_get_contents( $url, false, $context );
+    $response = @file_get_contents( $url, false, $context );
 
     return json_decode( $response );
 }
@@ -30,7 +30,7 @@ function call_gpt( $prompt = array() ) {
         'https://api.openai.com/v1/chat/completions', 
         OPENAI_TOKEN,
         array(
-            'model'     => 'gpt-4',
+            'model'     => 'gpt-3.5-turbo',
             'messages'  => $prompt,
             'max_tokens' => 2048,
         ),
