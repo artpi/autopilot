@@ -7,6 +7,7 @@ define( 'FILE', 'content/index.html' );
 function call_api( $url, $token, $payload = '', $method = 'GET' ) {
     $options = array(
         'http' => array(
+            'timeout' => 180, // 3 minutes should be enough.
             'ignore_errors' => true,
             'method'  => $method,
             'header'  => "Content-Type: application/json\r\n" .
