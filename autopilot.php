@@ -51,8 +51,8 @@ function call_gpt( $prompt = array() ) {
         );
     }
 
+    print_r( $response_data );
     if ( ! isset( $response_data->choices[0]->message->content ) ) {
-        print_r( $response_data );
         return false;
     }
     $html = trim( $response_data->choices[0]->message->content );
