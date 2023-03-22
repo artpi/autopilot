@@ -4,100 +4,79 @@ define( 'GITHUB_TOKEN', getenv('GITHUB_API_KEY') );
 define( 'REPO', 'artpi/autopilot' );
 define( 'FILE', 'content/index.html' );
 
+function call_api( $url, $token, $payload = '', $method = 'GET' ) {
+    $options = array(
+        'http' => array(
+            'method'  => $method,
+            'header'  => "Content-Type: application/json\r\n" .
+                         "User-Agent: artpi\r\n" .
+                         "Authorization: Bearer " . $token . "\r\n",
+        ),
+    );
 
-function callGithub( $url, $payload ) {
-    $ch = curl_init( $url );
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-    $headers = array(
-        'Content-Type:application/json',
-        'User-Agent: artpi',
-        'Authorization: Bearer ' . GITHUB_TOKEN
-    );        
     if ( $payload ) {
-        // We got a PATCH!
-        // Attach encoded JSON string to the POST fields
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $payload ) );
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH' );
-
+        $options['http']['content'] = json_encode( $payload );
     }
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers );
-    $return = curl_exec($ch);
-    curl_close( $ch );
-    return $return;
+
+    $context = stream_context_create( $options );
+    $response = file_get_contents( $url, false, $context );
+
+    return json_decode( $response );
 }
 
-function callGPT( $prompt = [] ) {
-    // GPT-3 API endpoint
-    $url = "https://api.openai.com/v1/chat/completions";
+function call_gpt( $prompt = array() ) {
+    $response_data = call_api(
+        'https://api.openai.com/v1/chat/completions', 
+        OPENAI_TOKEN,
+        array(
+            'model'     => 'gpt-4',
+            'messages'  => $prompt,
+            'max_tokens' => 2048,
+        ),
+        'POST',
+    );
 
-    // Request options
-    $options = [
-        "http" => [
-            "method" => "POST",
-            "header" => "Content-Type: application/json\r\n" .
-                        "Authorization: Bearer " . OPENAI_TOKEN . "\r\n",
-            "content" => json_encode([
-                "model" => "gpt-4",
-                "messages" => $prompt,
-                "max_tokens" => 2048
-            ])
-        ]
-    ];
-
-    // Create a stream context
-    $context = stream_context_create($options);
-
-    // Send the request
-    $response = file_get_contents($url, false, $context);
-
-    // Decode the response
-    $response_data = json_decode($response, true);
-
-    if( ! isset( $response_data['choices'][0]['message']['content'] ) ) {
+    if ( ! isset( $response_data->choices[0]->message->content ) ) {
         print_r( $response_data );
         return false;
     }
 
-    // Print the generated text
-    return trim( $response_data['choices'][0]['message']['content'] );
+    return trim( $response_data->choices[0]->message->content );
 }
 
 function change( $new_instruction = '' ) {
     $system_prompt = 'You are a program that manipulates html. Please output only valid HTML. You can use Javascript, CSS and HTML5 tags. You will get previous content of the page and will manipulate it to accomodate a following instruction.';
     $previous_html = file_get_contents( FILE );
-    $prompt = [
-        [
-            'role' => 'system',
+    $prompt = array(
+        array(
+            'role'    => 'system',
             'content' => $system_prompt,
-        ],
-        [
-            'role' => 'user',
+        ),
+        array(
+            'role'    => 'user',
             'content' => $new_instruction,
-        ],
-        [
-            'role' => 'user',
+        ),
+        array(
+            'role'    => 'user',
             'content' => $previous_html,
-        ]
-    ];
-    $response = callGPT( $prompt );
-    if( $response ) {
+        ),
+    );
+    $response = call_gpt( $prompt );
+    if ( $response ) {
         file_put_contents( FILE, $response );
     }
-
 }
 
-function performChangesFromIssues() {
-    $response = callGithub( 'https://api.github.com/repos/' . REPO . '/issues?state=open', [] );
-    $issues = json_decode( $response );
-    if( ! $issues ) {
+function perform_changes_from_issues() {
+    $issues = call_api( 'https://api.github.com/repos/' . REPO . '/issues?state=open', GITHUB_TOKEN );
+    if ( ! $issues ) {
         return;
     }
-    $prompts = array_map( function( $issue ) {
-        return $issue->title . "\n\n" . substr( $issue->body, 0, 248 );
-    }, $issues );
+    $prompts = array_map(
+        function ( $issue ) {
+            return $issue->title . "\n\n" . substr( $issue->body, 0, 248 );
+        }, $issues
+    );
 
     $prompt = join( "\n\n", $prompts );
 
@@ -108,9 +87,10 @@ function performChangesFromIssues() {
 
     change( $prompt );
 
-    foreach( $issues as $issue ) {
-        callGithub( $issue->url, [ 'state' => 'closed' ] );
+    foreach ( $issues as $issue ) {
+        call_api( $issue->url, GITHUB_TOKEN, array( 'state' => 'closed' ), 'PATCH' );
     }
 }
 
-performChangesFromIssues();
+perform_changes_from_issues();
+
