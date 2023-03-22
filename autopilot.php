@@ -71,6 +71,7 @@ function call_dalle( $prompt ) {
 
 
     if ( file_exists( $path ) ) {
+        echo "image exists";
         return $relative;
     }
 
@@ -114,18 +115,24 @@ function change( $new_instruction = '' ) {
     );
     $response = call_gpt( $prompt );
     if ( $response ) {
-
-        // Now let's have images!
-        preg_match_all( '#<img src="(http[^"]+)" alt="([^"]+)" \/>#is', $response, $images );
-        if ( isset( $images[2][0] )  ) {
-            // We have an alt text for the first image. We are only going to handle that one.
-            $image_url = call_dalle( $images[2][0] );
-            if ( $image_url ) {
-                $response = str_replace( $images[1][0], $image_url, $response );
+        // Now let's check images!
+        preg_match_all( '#<img src="([^"]+)" alt="([^"]+)" \/>#is', $response, $images );
+        $used_dalle = false;
+        foreach( $images[1] as $key => $image_url ) {
+            if( file_exists( 'content/' . $image_url ) ) {
+                // image already is there.
+            } else if ( $used_dalle ) {
+                // We are going to just remove this image since we cannot run arround burning our dalle credits.
+                $response = str_replace( $images[0][$key], '', $response );
+            } else {
+                $used_dalle = true;
+                echo "calling dalle with {$images[2][$key]}\n";
+                $image_url = call_dalle( $images[2][$key] );
+                if ( $image_url ) {
+                    $response = str_replace( $images[1][$key], $image_url, $response );
+                }
             }
-            foreach( $images[0] as $image ) {
-                $response = str_replace( $image, '', $response );
-            }
+            
         }
 
         file_put_contents( FILE, $response );
