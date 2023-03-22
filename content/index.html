@@ -2,20 +2,25 @@
 <html>
 <head>
 	<title>My Page</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 	<style>
 		body {
-			background-color: yellow;
+			background-color: #F8EDA6;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			font-family: 'Poppins', sans-serif;
 		}
 		img {
 			display: block;
 			margin: 0 auto;
+			border-radius: 50%;
+			box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+			margin-top: 50px;
 		}
 		.story-container {
 			max-width: 800px;
-			margin: 0 auto;
+			margin: 50px auto;
 			text-align: center;
 		}
         .confetti {
@@ -23,6 +28,17 @@
             z-index: 99999;
             width: 1rem;
             height: 1rem;
+            border-radius: 50%;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+        }
+        h2 {
+        	font-size: 36px;
+        	color: #333333;
+        	margin-bottom: 30px;
+        }
+        p {
+        	font-size: 18px;
+        	color: #666666;
         }
 	</style>
 </head>
@@ -36,7 +52,7 @@
     </div>
     
     <script>
-        const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+        const colors = ['#F5A623', '#F70000', '#EB008B', '#580296', '#4CA4B4', '#00C853'];
 
         class Confetti {
             constructor() {
