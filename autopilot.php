@@ -47,10 +47,12 @@ function call_gpt( $prompt = array() ) {
 
 function call_dalle( $prompt ) {
     $filename = strtolower( preg_replace( '/[^a-zA-Z]/', '_', $prompt ) ) . '.png';
-    $path = "content/images/" . $filename;
+    $relative = "images/" . $filename;
+    $path = "content/$relative";
+
 
     if ( file_exists( $path ) ) {
-        return $path;
+        return $relative;
     }
 
     $response_data = call_api(
@@ -71,7 +73,7 @@ function call_dalle( $prompt ) {
     
     copy( $response_data->data[0]->url, $path );
     echo "Created image $path\n";
-    return $path;
+    return $relative;
 }
 
 function change( $new_instruction = '' ) {
