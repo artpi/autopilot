@@ -7,6 +7,7 @@ define( 'FILE', 'content/index.html' );
 function call_api( $url, $token, $payload = '', $method = 'GET' ) {
     $options = array(
         'http' => array(
+            'ignore_errors' => true,
             'method'  => $method,
             'header'  => "Content-Type: application/json\r\n" .
                          "User-Agent: artpi\r\n" .
@@ -64,7 +65,9 @@ function change( $new_instruction = '' ) {
     $response = call_gpt( $prompt );
     if ( $response ) {
         file_put_contents( FILE, $response );
+        return true;
     }
+    return false;
 }
 
 function perform_changes_from_issues() {
