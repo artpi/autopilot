@@ -30,7 +30,7 @@ function call_gpt( $prompt = array() ) {
         'https://api.openai.com/v1/chat/completions', 
         OPENAI_TOKEN,
         array(
-            'model'     => 'gpt-3.5-turbo',
+            'model'     => 'gpt-4',
             'messages'  => $prompt,
             'max_tokens' => 2048,
         ),
