@@ -10,6 +10,7 @@ function call_api( $url, $token, $payload = '', $method = 'GET' ) {
             'ignore_errors' => true,
             'method'  => $method,
             'header'  => "Content-Type: application/json\r\n" .
+                         "User-Agent: autopilot\r\n" . 
                          "Authorization: Bearer " . $token . "\r\n",
         ),
     );
