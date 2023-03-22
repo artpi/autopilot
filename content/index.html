@@ -111,13 +111,20 @@
             border-radius: 6px;
             border: none;
         }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
+    <img src="images/small_logo.png" alt="Small Logo" class="logo" />
     <div class="flashing-banner" onclick="new Confetti();"><h1>Click Here</h1></div>
     <img src="images/green_tree_frog.png" alt="Green Tree Frog" />
-    <button id="buy-now-button" onclick="alert('Frog successfully bought. It will be delivered in 2 days.');">Buy now</button>
+    <button id="buy-now-button" onclick="alert('You are not actually buying anything.');">Buy now</button>
     <div class="story-container">
         <h2>Touching Story About a Dog</h2>
         <p>Once upon a time in a small village, there lived a kindhearted dog named Max...</p>
@@ -168,3 +175,4 @@
         window.addEventListener('load', confettiLoop);
     </script>
 </body>
+</html>
