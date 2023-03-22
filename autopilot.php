@@ -57,10 +57,10 @@ function call_gpt( $prompt = array() ) {
     }
     $html = trim( $response_data->choices[0]->message->content );
 
-    if ( strpos( $html, '<!DOCTYPE html>' ) !== 0 ) {
-        // GPT respondend not with valid HTML. We abort.
-        die();
-    }
+    // if ( strpos( $html, '<!DOCTYPE html>' ) !== 0 ) {
+    //     // GPT respondend not with valid HTML. We abort.
+    //     die();
+    // }
     return $html;
 }
 
