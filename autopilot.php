@@ -37,12 +37,31 @@ function call_gpt( $prompt = array() ) {
         'POST',
     );
 
+    if ( isset( $response_data->error->type ) && $response_data->error->type === 'server_error' ) {
+        echo "GPT4 rate limited. Let's fall back to chat gpt api.";
+        $response_data = call_api(
+            'https://api.openai.com/v1/chat/completions', 
+            OPENAI_TOKEN,
+            array(
+                'model'     => 'gpt-3.5-turbo',
+                'messages'  => $prompt,
+                'max_tokens' => 2048,
+            ),
+            'POST',
+        );
+    }
+
     if ( ! isset( $response_data->choices[0]->message->content ) ) {
         print_r( $response_data );
         return false;
     }
+    $html = trim( $response_data->choices[0]->message->content );
 
-    return trim( $response_data->choices[0]->message->content );
+    if ( strpos( $html, '<!DOCTYPE html>' ) !== 0 ) {
+        // GPT respondend not with valid HTML. We abort.
+        die();
+    }
+    return $html;
 }
 
 function call_dalle( $prompt ) {
