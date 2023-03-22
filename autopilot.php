@@ -10,7 +10,6 @@ function call_api( $url, $token, $payload = '', $method = 'GET' ) {
             'ignore_errors' => true,
             'method'  => $method,
             'header'  => "Content-Type: application/json\r\n" .
-                         "User-Agent: artpi\r\n" .
                          "Authorization: Bearer " . $token . "\r\n",
         ),
     );
@@ -21,11 +20,16 @@ function call_api( $url, $token, $payload = '', $method = 'GET' ) {
 
     $context = stream_context_create( $options );
     $response = @file_get_contents( $url, false, $context );
-
+    if( ! $response ) {
+        echo "Empty response from OpenAI! \n";
+        return false;
+    }
+    print_r( $response );
     return json_decode( $response );
 }
 
 function call_gpt( $prompt = array() ) {
+    print_r( $prompt );
     $response_data = call_api(
         'https://api.openai.com/v1/chat/completions', 
         OPENAI_TOKEN,
@@ -37,7 +41,7 @@ function call_gpt( $prompt = array() ) {
         'POST',
     );
 
-    if ( isset( $response_data->error->type ) && $response_data->error->type === 'server_error' ) {
+    if ( ! $response_data || ( isset( $response_data->error->type ) && $response_data->error->type === 'server_error' ) ) {
         echo "GPT4 rate limited. Let's fall back to chat gpt api.";
         $response_data = call_api(
             'https://api.openai.com/v1/chat/completions', 
@@ -53,14 +57,16 @@ function call_gpt( $prompt = array() ) {
 
     print_r( $response_data );
     if ( ! isset( $response_data->choices[0]->message->content ) ) {
-        return false;
+        echo "Empty response. Aborting\n";
+        exit( 1 );
     }
     $html = trim( $response_data->choices[0]->message->content );
 
-    // if ( strpos( $html, '<!DOCTYPE html>' ) !== 0 ) {
-    //     // GPT respondend not with valid HTML. We abort.
-    //     die();
-    // }
+    if ( strpos( $html, '<!DOCTYPE html>' ) !== 0 ) {
+        // GPT respondend not with invalid HTML. We abort.
+        echo "Invalid HTML. Aborting\n";
+        exit( 1 );
+    }
     return $html;
 }
 
@@ -97,7 +103,7 @@ function call_dalle( $prompt ) {
 }
 
 function change( $new_instruction = '' ) {
-    $system_prompt = 'You are a program that manipulates html. Please output only valid HTML. You can use Javascript, CSS and HTML5 tags. You will get previous content of the page and will manipulate it to accomodate a following instruction.';
+    $system_prompt = 'You are a program that manipulates html. Please output only valid HTML. You can use Javascript, CSS and HTML5 tags. You will get previous content of the page and will manipulate it to accomodate a following instructions:';
     $previous_html = file_get_contents( FILE );
     $prompt = array(
         array(
@@ -110,9 +116,10 @@ function change( $new_instruction = '' ) {
         ),
         array(
             'role'    => 'user',
-            'content' => $previous_html,
+            'content' => "Here is the previous HTML. Please only output HTML in return: ```\n{$previous_html}\n```",
         ),
     );
+
     $response = call_gpt( $prompt );
     if ( $response ) {
         // Now let's check images!
