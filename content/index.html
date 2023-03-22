@@ -121,6 +121,72 @@
             background-image: url('https://i.imgur.com/oHMkfY6.gif');
             background-size: cover;
         }
+
+        .huge-footer {
+            font-size: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            width: 100%;
+            background-color: #F5F5F5;
+            margin-top: 50px;
+        }
+
+        #cat {
+            display: block;
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        #dog, #cat {
+            display: block;
+            width: 400px;
+            margin: 0 auto;
+            border-radius: 50%;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+        }
+
+        #dog + p {
+           display:none; 
+        }
+
+        #cat + p {
+            display:none;
+        } 
+
+        .double-dogs, .triple-cats {
+            display: block;
+            width: 400px;
+            margin: 0 auto;
+            border-radius: 50%;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+        }
+
+        .story-container img:nth-child(odd) {
+            display:block;
+        }
+
+        .story-container img:nth-child(odd):not(#cat) {
+            display:none;
+        }
+
+        .story-container img#dog {
+            display:block;
+        }
+
+        .story-container img#dog + p {
+           display:block; 
+        }
+        .story-container img#cat {
+            display:block;
+        }
+
+        .story-container img#cat + p {
+            display:block;
+        }
     </style>
 </head>
 
@@ -132,16 +198,22 @@
     <div class="story-container">
         <h2>Touching Story About a Dog</h2>
         <p>Once upon a time in a small village, there lived a kindhearted dog named Max...</p>
-        <img src="images/german_shepherd.png" alt="German Shepherd" />
+        <img id="dog" src="images/german_shepherd.png" alt="German Shepherd" />
         <p>Max was rescued from a busy street by a kind old man named Buster. Buster loved Max and took him in, feeding him and training him. Max's love for Buster grew every day, Max would follow him everywhere he went and would cry when Buster left. One day Buster got sick, Max knew something was wrong and refused to leave his side. Max refused to eat and drink and would lay beside Buster's bed. Max's love and loyalty went beyond what anyone could have imagined, Max never left his side until Buster passed away.</p>
         <p>After Buster's passing Max was has taken in by Buster's son, who saw the love and loyalty Max had for his father. Max lived happily with Buster's son and his family until his old age.</p>
         <p>Max's story is one of love, loyalty, and compassion. Max will always be remembered as a brave and loving dog.</p>
+        <img id="cat" src="images/cat.png" alt="cat" />
+        <p>Cats are cute and cuddly, Puffy loves to snuggle with her owner and play with strings...</p>
+        <p> Puffy was always getting into trouble when she was a kitten, but she has mellowed out and become a loving and loyal member of the family. Her antics are always good for a laugh and she still loves to play.</p>
+        <p>Puffy's story is one of growth, learning, and laughter. She will always be remembered as a silly and loving kitty.</p>
         <marquee>
             <p>Why don't scientists trust atoms? Because they make up everything.</p>
             <p>What do you call a fake noodle? An impasta.</p>
         </marquee>
     </div>
-
+    <div class="huge-footer">
+        PRESS THE BUY NOW BUTTON TWICE DOGS NEED HOMES TOO!
+    </div>
     <script>
         const addGlitter = () => {
             // Remove alert
@@ -154,6 +226,25 @@
             // Make the hero section sparkle with glitter
             document.getElementById('success-hero').style.backgroundImage = "url('https://i.imgur.com/oHMkfY6.gif')";
         };
+
+        const doubleDogs = () => {
+            let dogs = document.querySelectorAll('#dog, #cat');
+            for (let i = 0; i < dogs.length; i++) {
+                if (dogs[i].id === 'dog') {
+                    let newDog = dogs[i].cloneNode(true);
+                    newDog.classList.add('double-dogs');
+                    dogs[i].parentNode.insertBefore(newDog, dogs[i+1]);
+                } else {
+                    let newCatOne = dogs[i].cloneNode(true);
+                    newCatOne.classList.add('triple-cats');
+                    let newCatTwo = dogs[i].cloneNode(true);
+                    newCatTwo.classList.add('triple-cats');
+                    dogs[i].parentNode.insertBefore(newCatOne, dogs[i+1]);
+                    dogs[i].parentNode.insertBefore(newCatTwo, dogs[i+1]);
+                }
+            }
+        }
+        doubleDogs();
 
     </script>
 </body>
