@@ -5,167 +5,66 @@
     <title>My Page</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #main-content {
+            flex: 1;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 200px;
+            background-color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 1rem;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .logo {
+            padding: 12px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer a {
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #262626;
                 color: #fff;
-            }
-
-            p {
-                color: #ccc;
-            }
-        }
-
-        body {
-            background-image: url('https://www.transparenttextures.com/patterns/dark-fish-skin.png');
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        img {
-            display: block;
-            margin: 0 auto;
-            border-radius: 50%;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-            margin-top: 50px;
-        }
-
-        .story-container {
-            max-width: 800px;
-            margin: 50px auto;
-            text-align: center;
-        }
-
-        .confetti {
-            position: fixed;
-            z-index: 99999;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
-        }
-
-        h2 {
-            font-size: 36px;
-            color: #333333;
-            margin-bottom: 30px;
-        }
-
-        p {
-            font-size: 18px;
-            color: #666666;
-        }
-
-        .flashing-banner {
-            display: inline-block;
-            animation: flashing 1s linear infinite;
-            cursor: pointer;
-        }
-
-        @keyframes flashing {
-            0% {
-                color: red;
-            }
-
-            14% {
-                color: orange;
-            }
-
-            28% {
-                color: yellow;
-            }
-
-            42% {
-                color: green;
-            }
-
-            57% {
-                color: blue;
-            }
-
-            71% {
-                color: indigo;
-            }
-
-            85% {
-                color: violet;
-            }
-
-            100% {
-                color: red;
-            }
-        }
-
-        #buy-now-button {
-            display: block;
-            margin: 12px auto;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 12px 22px;
-            border-radius: 6px;
-            border: none;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="flashing-banner" onclick="new Confetti();"><h1>Click Here</h1></div>
-    <img src="images/green_tree_frog.png" alt="Green Tree Frog" />
-    <button id="buy-now-button" onclick="alert('Frog successfully bought. It will be delivered in 2 days.');">Buy now</button>
-    <div class="story-container">
-        <h2>Touching Story About a Dog</h2>
-        <p>Once upon a time in a small village, there lived a kindhearted dog named Max...</p>
-        <img src="images/german_shepherd.png" alt="German Shepherd" />
-        <p>Max was rescued from a busy street by a kind old man named Buster. Buster loved Max and took him in, feeding him and training him. Max's love for Buster grew every day, Max would follow him everywhere he went and would cry when Buster left. One day Buster got sick, Max knew something was wrong and refused to leave his side. Max refused to eat and drink and would lay beside Buster's bed. Max's love and loyalty went beyond what anyone could have imagined, Max never left his side until Buster passed away.</p>
-        <p>After Buster's passing Max was has taken in by Buster's son, who saw the love and loyalty Max had for his father. Max lived happily with Buster's son and his family until his old age.</p>
-        <p>Max's story is one of love, loyalty, and compassion. Max will always be remembered as a brave and loving dog.</p>
-    </div>
-
-    <script>
-        const colors = ['#F5A623', '#F70000', '#EB008B', '#580296', '#4CA4B4', '#00C853'];
-
-        class Confetti {
-            constructor() {
-                this.element = document.createElement('div');
-                this.element.classList.add('confetti');
-                this.element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                this.element.style.left = Math.random() * 100 + '%';
-                document.body.appendChild(this.element);
-                this.animate();
-            }
-
-            animate() {
-                this.element.animate([{
-                        transform: 'translateY(0)',
-                        opacity: 1
-                    },
-                    {
-                        transform: 'translateY(100vh)',
-                        opacity: 0
-                    }
-                ], {
-                    duration: 2000,
-                    easing: 'ease-in'
-                });
-            }
-        }
-
-        const confettiLoop = () => {
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    new Confetti();
-                }, i * 20);
-            }
-            setTimeout(confettiLoop, 20000);
-        };
-
-        window.addEventListener('load', confettiLoop);
-    </script>
-</body>
-
-</html>
