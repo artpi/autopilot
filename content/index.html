@@ -1,16 +1,87 @@
-To add a photo of a German Shepherd, you can add the following code inside the `story-container` div:
-
-```
-<img src="content/images/german_shepherd.jpg" alt="German Shepherd" />
-```
-
-Make sure to replace `content/images/german_shepherd.jpg` with the actual path and file name of the image. You can also add styling to the image, such as `max-width` or `margin`. Here is the updated code:
-
-```
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+	<style>
+		body {
+			background-color: #F8EDA6;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-family: 'Poppins', sans-serif;
+		}
+		img {
+			display: block;
+			margin: 0 auto;
+			border-radius: 50%;
+			box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+			margin-top: 50px;
+		}
+		.story-container {
+			max-width: 800px;
+			margin: 50px auto;
+			text-align: center;
+		}
+        .confetti {
+            position: fixed;
+            z-index: 99999;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+        }
+        h2 {
+        	font-size: 36px;
+        	color: #333333;
+        	margin-bottom: 30px;
+        }
+        p {
+        	font-size: 18px;
+        	color: #666666;
+        }
+	</style>
+</head>
+<body>
+    <img src="content/images/green_tree_frog.png" alt="Green Tree Frog" />
     <div class="story-container">
         <h2>Touching Story About a Dog</h2>
         <p>Once upon a time in a small village, there lived a kindhearted dog named Max...</p>
-        <img src="content/images/german_shepherd.jpg" alt="German Shepherd" style="max-width: 100%; margin-top: 30px;" />
+
     <!-- ...rest of story... -->
     </div>
-```
+    
+    <script>
+        const colors = ['#F5A623', '#F70000', '#EB008B', '#580296', '#4CA4B4', '#00C853'];
+
+        class Confetti {
+            constructor() {
+                this.element = document.createElement('div');
+                this.element.classList.add('confetti');
+                this.element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                this.element.style.left = Math.random() * 100 + '%';
+                document.body.appendChild(this.element);
+                this.animate();
+            }
+
+            animate() {
+                this.element.animate([
+                    { transform: 'translateY(0)', opacity: 1 },
+                    { transform: 'translateY(100vh)', opacity: 0 }
+                ], {
+                    duration: 2000,
+                    easing: 'ease-in'
+                });
+            }
+        }
+
+        window.addEventListener('load', () => {
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    new Confetti();
+                }, i * 20);
+            }
+        });
+    </script>
+</body>
+</html>
