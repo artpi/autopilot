@@ -62,7 +62,7 @@ function call_gpt( $prompt = array() ) {
         echo "Empty response. Aborting\n";
         exit( 1 );
     }
-    $html = trim( $response_data->choices[0]->message->content );
+    $html = trim( $response_data->choices[0]->message->content ) . "\n</html>"; // We need to add html because its a stop sequence so it won't be in the output.
 
     if ( strpos( $html, '<!DOCTYPE html>' ) !== 0 ) {
         // GPT respondend not with invalid HTML. We abort.
