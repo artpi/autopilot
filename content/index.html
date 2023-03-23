@@ -232,6 +232,7 @@
     <div class="story-container">
         <!-- Remaining HTML content -->
     </div>
+    <div id="countdown" style="font-size: 24px; margin-bottom: 30px;"></div>
     <div class="huge-footer">
         PRESS THE BUY NOW BUTTON TWICE DOGS NEED HOMES TOO!
     </div>
@@ -243,6 +244,18 @@
             document.getElementById('buy-now-button').style.display = 'none';
             document.getElementById('success-hero').style.display = 'block';
         };
+
+        // Countdown timer
+        const updateCountdown = () => {
+            const now = new Date();
+            const currentMinutes = now.getMinutes();
+            const currentSeconds = now.getSeconds();
+            const remainingMinutes = 59 - currentMinutes;
+            const remainingSeconds = 59 - currentSeconds;
+            document.getElementById('countdown').textContent = `Next update in ${remainingMinutes}m ${remainingSeconds}s`;
+        };
+    
+        setInterval(updateCountdown, 1000);
 
         // Other JavaScript functions
     </script>
