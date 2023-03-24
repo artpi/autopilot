@@ -125,29 +125,32 @@ function change( $new_instruction = '' ) {
     $response = call_gpt( $prompt );
     if ( $response ) {
         // Now let's check images!
-        preg_match_all( '#<img src="([^"]+)" alt="([^"]+)" \/>#is', $response, $images );
-        $used_dalle = false;
-        foreach( $images[1] as $key => $image_url ) {
-            if( file_exists( 'content/' . $image_url ) ) {
-                // image already is there.
-            } else if ( $used_dalle ) {
-                // We are going to just remove this image since we cannot run arround burning our dalle credits.
-                $response = str_replace( $images[0][$key], '', $response );
-            } else {
-                $used_dalle = true;
-                echo "calling dalle with {$images[2][$key]}\n";
-                $image_url = call_dalle( $images[2][$key] );
-                if ( $image_url ) {
-                    $response = str_replace( $images[1][$key], $image_url, $response );
-                }
-            }
-            
-        }
-
+        check_images( $response );
         file_put_contents( FILE, $response );
         return true;
     }
     return false;
+}
+
+function check_images( $response ) {
+    preg_match_all( '#<img src="([^"]+)" .*?alt="([^"]+)".*?\/>#is', $response, $images );
+    $used_dalle = false;
+    foreach( $images[1] as $key => $image_url ) {
+        if( file_exists( 'content/' . $image_url ) ) {
+            // image already is there.
+        } else if ( $used_dalle ) {
+            // We are going to just remove this image since we cannot run arround burning our dalle credits.
+            $response = str_replace( $images[0][$key], '', $response );
+        } else {
+            $used_dalle = true;
+            echo "calling dalle with {$images[2][$key]}\n";
+            $image_url = call_dalle( $images[2][$key] );
+            if ( $image_url ) {
+                $response = str_replace( $images[1][$key], $image_url, $response );
+            }
+        }   
+    }
+    return $response;
 }
 
 function perform_changes_from_issues() {
