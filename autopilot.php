@@ -73,7 +73,7 @@ function call_gpt( $prompt = array() ) {
 }
 
 function call_dalle( $prompt ) {
-    $filename = strtolower( preg_replace( '/[^a-zA-Z]/', '_', $prompt ) ) . '.png';
+    $filename = strtolower( preg_replace( '/[^a-zA-Z0-8]/', '_', $prompt ) ) . '.png';
     $relative = "images/" . $filename;
     $path = "content/$relative";
 
@@ -133,7 +133,7 @@ function change( $new_instruction = '' ) {
 }
 
 function check_images( $response ) {
-    preg_match_all( '#<img src="([^"]+)" .*?alt="([^"]+)".*?\/>#is', $response, $images );
+    preg_match_all( '#<img src="([^"]+)" .*?alt="([^"]+)".*?>#is', $response, $images );
     $used_dalle = false;
     foreach( $images[1] as $key => $image_url ) {
         if( file_exists( 'content/' . $image_url ) ) {
@@ -194,3 +194,4 @@ function commit( $message ) {
 }
 
 perform_changes_from_issues();
+//file_put_contents( FILE, check_images( file_get_contents( FILE ) ) );
