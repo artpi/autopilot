@@ -3,243 +3,42 @@
 
 <head>
     <title>My Page</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css" integrity="sha512-pZlB7NOTJpqmWlKt7xEDQFyedwlp+iT7ljhf1Wg581/zOoJyKoIv7ry8neWtuO9gESs2sEtynV7IuG+SqM0yRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap" />
+
     <style>
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #262626;
-                color: #fff;
-            }
-
-            p {
-                color: #ccc;
+                --color-text: #fff;
+                --color-text-secondary: #ccc;
+                --background-color: #262626;
             }
         }
 
         body {
-            background-image: linear-gradient(to right, #00c6ff, #0072ff);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        img {
-            display: block;
-            width: 200px;
-            margin: 0 auto;
-            border-radius: 50%;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-            margin-top: 50px;
-        }
-
-        .story-container {
-            max-width: 800px;
-            margin: 50px auto;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 36px;
-            color: #333333;
-            margin-bottom: 30px;
-        }
-
-        p {
-            font-size: 18px;
-            color: #666666;
-        }
-
-        .flashing-banner {
-            display: inline-block;
-            animation: flashing 1s linear infinite;
-            cursor: pointer;
-        }
-
-        @keyframes flashing {
-            0% {
-                color: red;
-            }
-
-            14% {
-                color: orange;
-            }
-
-            28% {
-                color: yellow;
-            }
-
-            42% {
-                color: green;
-            }
-
-            57% {
-                color: blue;
-            }
-
-            71% {
-                color: indigo;
-            }
-
-            85% {
-                color: violet;
-            }
-
-            100% {
-                color: red;
-            }
-        }
-
-        #buy-now-button {
-            display: block;
-            margin: 12px auto;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 12px 22px;
-            border-radius: 6px;
-            border: none;
-        }
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            margin-top: 20px;
-        }
-
-        .success-hero {
-            display: none;
-            font-size: 48px;
-            font-weight: bold;
-            color: #FFFFFF;
-            text-align: center;
-            padding: 50px;
-            margin: 20px;
-            border-radius: 10px;
-            background-size: cover;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .unicorn {
-            margin: 30px auto;
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border: 10px solid transparent;
-            border-bottom-color: #fff;
-            transform: translateY(100%) translateX(100%);
-            animation: sparkle 2s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0% {
-                width: 0;
-                border-width: 10px;
-                opacity: 1;
-            }
-            50% {
-                width: 100px;
-                height: 100px;
-                border-width: 0;
-                opacity: 0;
-            }
-            100% {
-                width: 0;
-                border-width: 10px;
-                opacity: 1;
-            }
-        }
-        
-        .huge-footer {
-            font-size: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            width: 100%;
-            background-color: #F5F5F5;
-            margin-top: 50px;
-        }
-
-        #cat {
-            display: block;
-            width: 400px;
-            margin: 0 auto;
-        }
-
-        #dog, #cat {
-            display: block;
-            width: 400px;
-            margin: 0 auto;
-            border-radius: 50%;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-            margin-top: 50px;
-        }
-
-        #dog + p {
-           display:none; 
-        }
-
-        #cat + p {
-            display:none;
-        } 
-
-        .double-dogs, .triple-cats {
-            display: block;
-            width: 400px;
-            margin: 0 auto;
-            border-radius: 50%;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-            margin-top: 50px;
-        }
-
-        .story-container img:nth-child(odd) {
-            display:block;
-        }
-
-        .story-container img:nth-child(odd):not(#cat) {
-            display:none;
-        }
-
-        .story-container img#dog {
-            display:block;
-        }
-
-        .story-container img#dog + p {
-           display:block; 
-        }
-        .story-container img#cat {
-            display:block;
-        }
-
-        .story-container img#cat + p {
-            display:block;
+            --color-text: #666666;
+            --color-text-secondary: #333333;
+            --background-color: linear-gradient(to right, #00c6ff, #0072ff);
         }
     </style>
 </head>
 
-<body>
-    <img src="images/__bit_isometric_view_of_a_dachsund.png" alt="8 bit isometric view of a Dachsund" class="logo" />
-    <button id="buy-now-button" onclick="addGlitter()">Buy now</button>
-    <div id="success-hero" class="success-hero">
+<body class="bg-gradient-to-r from-blue-500 to-lightBlue-500 text-base font-poppins flex flex-col items-center">
+    <img src="images/__bit_isometric_view_of_a_dachsund.png" alt="8 bit isometric view of a Dachsund" class="w-12 h-12 mt-5 mb-3 />
+    <button id="buy-now-button" onclick="addGlitter()" class="bg-green-500 text-white text-xl px-6 py-3 rounded-md mb-4">Buy now</button>
+    <div id="success-hero" class="text-4xl font-bold text-white text-center py-12 px-6 mb-5 bg-cover bg-center relative rounded-md hidden">
         Success
         <div class="sparkle"></div>
         <div class="sparkle" style="animation-delay: 0.5s;"></div>
         <div class="sparkle" style="animation-delay: 1s;"></div>
     </div>
-    <div class="story-container">
-        <img src="images/a_unicorn.png" alt="A Unicorn" class="unicorn">
-        <p>This page is being created by GPT-4 by submitting GitHub issues. Enjoy our ever-changing content!</p>
+    <div class="story-container mx-auto max-w-5xl text-center mb-5">
+        <img src="images/a_unicorn.png" alt="A Unicorn" class="unicorn w-56 mx-auto mb-4">
+        <p class="text-gray-700">This page is being created by GPT-4 by submitting GitHub issues. Enjoy our ever-changing content!</p>
         <!-- Remaining HTML content -->
     </div>
-    <div id="countdown" style="font-size: 24px; margin-bottom: 30px;"></div>
-    <div class="huge-footer">
+    <div id="countdown" class="text-xl mb-8"></div>
+    <div class="huge-footer h-48 w-full bg-gray-200 text-6xl flex justify-center items-center mb-5">
         PRESS THE BUY NOW BUTTON TWICE DOGS NEED HOMES TOO!
     </div>
     <script>
