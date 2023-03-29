@@ -2,49 +2,100 @@
 <html>
 
 <head>
-    <title>My Page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css" integrity="sha512-pZlB7NOTJpqmWlKt7xEDQFyedwlp+iT7ljhf1Wg581/zOoJyKoIv7ry8neWtuO9gESs2sEtynV7IuG+SqM0yRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap" />
+    <title>Adopt a Unicorn Non-Profit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css" integrity="sha512-pZlB7NOTJpqmWlKt7xEDQFyedwlp+iT7ljhf1Wg581/zOoJyKoIv7ry8neWtuO9gESs2sEtynV7IuG+SqM0yRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap" />
 
-    <style>
-        @media (prefers-color-scheme: dark) {
-            body {
-                --color-text: #fff;
-                --color-text-secondary: #ccc;
-                --background-color: #262626;
-            }
-        }
-
+  <style>
+    @media (prefers-color-scheme: dark) {
         body {
-            --color-text: #666666;
-            --color-text-secondary: #333333;
-            --background-color: linear-gradient(to right, #00c6ff, #0072ff);
+            --color-text: #fff;
+            --color-text-secondary: #ccc;
+            --background-color: #262626;
         }
-    </style>
+    }
+
+    body {
+        --color-text: #666666;
+        --color-text-secondary: #333333;
+        --background-color: linear-gradient(to right, #00c6ff, #0072ff);
+    }
+  </style>
 </head>
 
 <body class="bg-gradient-to-r from-blue-500 to-lightBlue-500 text-base font-poppins flex flex-col items-center">
-    <img src="images/__bit_isometric_view_of_a_dachsund.png" alt="8 bit isometric view of a Dachsund" class="w-12 h-12 mt-5 mb-3" />
-    <button id="buy-now-button" onclick="addGlitter()" class="bg-green-500 text-white text-xl px-6 py-3 rounded-md mb-4">Buy now</button>
-    <div id="success-hero" class="text-4xl font-bold text-white text-center py-12 px-6 mb-5 bg-cover bg-center relative rounded-md hidden">
-        Success
-        <div class="sparkle"></div>
-        <div class="sparkle" style="animation-delay: 0.5s;"></div>
-        <div class="sparkle" style="animation-delay: 1s;"></div>
+    <div id="navbar" class="w-full mx-auto px-4 py-2 bg-white flex justify-between shadow-sm">
+        <h1 class="font-bold text-xl text-purple-600">Adopt a Unicorn Non-Profit</h1>
+        <nav>
+            <ul class="flex">
+                <li class="mx-2"><a href="#" class="text-purple-600 hover:text-purple-800 font-medium">Adopt A Unicorn</a></li>
+                <li class="mx-2"><a href="#" class="text-purple-600 hover:text-purple-800 font-medium">About Us</a></li>
+                <li class="mx-2"><a href="#" class="text-purple-600 hover:text-purple-800 font-medium">Contact</a></li>
+            </ul>
+        </nav>
     </div>
+    <div id="hero-section" class="w-full mx-auto px-4 py-8 bg-white flex items-center justify-between my-5">
+        <div class="w-1/2">
+            <h2 class="text-2xl font-bold leading-tight text-gray-800 mb-3">Adopt a unicorn and make your world magical!</h2>
+            <p class="text-pink-600 leading-relaxed mb-4">Join the thousands of happy families who have brought home their very own unicorn.</p>
+            <button id="buy-now-button" onclick="addGlitter()" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-md">Adopt Now</button>
+        </div>
+        <img src="https://images.unsplash.com/photo-1490870683495-50647fa05983?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fG5pbnRlbmRlZCUyMGZ1bGx5JTIwdGltZSUyMGdyYWRpZW50fGVufDB8MHwwfGJhY2tncm91bmQlMjBmb3IlMjBzY2hvb2wlMjA0MDB4MTI0MHgzMDB8bm8lMjBwcm92aWRlcnxlbnwwfHx8&ixlib=rb-1.2.1&w=1000&q=80" alt="Unicorn" class="w-1/2 rounded-md shadow-md"/>
+    </div>
+
     <div class="story-container mx-auto max-w-5xl text-center mb-5">
-        <img src="images/a_unicorn.png" alt="A Unicorn" class="unicorn w-56 mx-auto mb-4">
-        <p class="text-gray-700">This page is being created by GPT-4 by submitting GitHub issues. Enjoy our ever-changing content!</p>
-        <!-- Remaining HTML content -->
+        <h2 class="text-2xl font-bold leading-tight text-gray-800 mb-3">Our Story</h2>
+        <p class="text-gray-700">Here at Adopt a Unicorn Non-Profit, we believe every family deserves a magical addition to their household. Our mission is to provide loving homes to unicorns in need of a forever family. We have partnered with certified unicorn breeders across the world to bring you the happiest and healthiest unicorns. With every adoption, we donate a portion of the proceeds to various charities dedicated to unicorn conservation and protection.</p>
     </div>
+
     <div id="countdown" class="text-xl mb-8"></div>
+
+    <section id="adopt-now" class="w-full mx-auto px-4 py-8 bg-white flex items-center justify-between my-5">
+        <img src="https://cdn.pixabay.com/photo/2018/01/21/14/17/teddy-3094078_960_720.png" alt="Adopt Now" class="w-1/3 rounded-md shadow-md"/>
+        <div class="w-1/2">
+            <h2 class="text-2xl font-bold leading-tight text-gray-800 mb-3">How to Adopt</h2>
+            <p class="text-gray-700 mb-3">Adopting a unicorn has never been easier! Simply follow these steps:</p>
+            <ol class="list-decimal ml-6">
+                <li class="text-gray-700 mb-1">Fill out our adoption application form.</li>
+                <li class="text-gray-700 mb-1">Schedule a virtual meet-and-greet with your unicorn.</li>
+                <li class="text-gray-700 mb-1">Complete the adoption paperwork.</li>
+                <li class="text-gray-700 mb-1">Get ready to welcome your magical new family member home!</li>
+            </ol>
+            <button id="learn-more-button" class="border border-purple-600 hover:bg-purple-700 text-purple-600 font-bold py-2 px-4 rounded-md mt-3">Learn More</button>
+        </div>
+    </section>
+
+    <section id="about-us" class="w-full mx-auto px-4 py-8 bg-white flex items-center justify-between my-5">
+        <div class="w-1/2">
+            <h2 class="text-2xl font-bold leading-tight text-gray-800 mb-3">About Us</h2>
+            <p class="text-gray-700">Adopt a Unicorn Non-Profit was founded by a group of unicorn enthusiasts who wanted to make a positive impact on the world of unicorn breeding and conservation. Our team is dedicated to providing a safe and loving environment for all unicorns, and to educating the public on the unique needs and challenges of unicorn ownership. We believe every family deserves a chance to experience the magic of unicorn ownership, and we are committed to making that dream a reality for as many people as possible.</p>
+        </div>
+        <img src="https://cdn.pixabay.com/photo/2018/03/21/14/34/unicorn-3246486_960_720.png" alt="About Us" class="w-1/3 rounded-md shadow-md"/>
+    </section>
+
+    <section id="contact-us" class="w-full mx-auto px-4 py-8 bg-white flex items-center justify-between my-5">
+        <img src="https://cdn.pixabay.com/photo/2021/05/17/14/06/owl-6269805_960_720.png" alt="Contact Us" class="w-1/3 rounded-md shadow-md"/>
+        <div class="w-1/2">
+            <h2 class="text-2xl font-bold leading-tight text-gray-800 mb-3">Contact Us</h2>
+            <p class="text-gray-700">If you have any questions or comments, or if you just want to say hello, please don't hesitate to reach out to us! We would love to hear from you.</p>
+            <form action="#" class="mt-6">
+              <label for="name" class="sr-only">Name</label>
+              <input type="text" id="name" name="name" placeholder="Name" class="w-full px-4 py-2 mb-4 border border-gray-400 rounded-md focus:shadow-outline-blue" required>
+              <label for="email" class="sr-only">Email</label>
+              <input type="email" id="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-4 border border-gray-400 rounded-md focus:shadow-outline-blue" required>
+              <label for="message" class="sr-only">Message</label>
+              <textarea name="message" id="message" cols="30" rows="5" placeholder="Message" class="w-full px-4 py-2 mb-4 border border-gray-400 rounded-md focus:shadow-outline-blue"></textarea>
+              <button type="submit" class="px-4 py-2 font-semibold bg-purple-600 hover:bg-purple-700 text-white rounded-md">Send</button>
+            </form>
+        </div>
+    </section>
+
     <div class="huge-footer h-48 w-full bg-gray-200 text-6xl flex justify-center items-center mb-5">
-        PRESS THE BUY NOW BUTTON TWICE DOGS NEED HOMES TOO!
+        <button id="buy-now-again-button" onclick="alert('Thank you for considering adopting another unicorn!')" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md">Adopt Another</button>
     </div>
+
     <script>
         const addGlitter = () => {
-            // Remove alert
-
             // Replace button with hero section saying "Success"
             document.getElementById('buy-now-button').style.display = 'none';
             document.getElementById('success-hero').style.display = 'block';
